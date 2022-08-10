@@ -1,0 +1,79 @@
+@font-face {
+  font-family: "BallingerMono-Medium";
+  src: url('~@/assets/fonts/ballinger-mono/ballingermono-medium.woff2') format('woff2'), url('~@/assets/fonts/ballinger-mono/ballingermono-medium.woff') format('woff');
+}
+@font-face {
+  font-family: "Ballinger-Regular";
+  src: url('~@/assets/fonts/ballinger/ballinger-regular.woff2') format('woff2'), url('~@/assets/fonts/ballinger/ballinger-regular.woff') format('woff');
+}
+
+#app {
+  background: #e6e6e6;
+  color: #001f3f;
+}
+
+.v-application {
+  font-family: "Ballinger-Regular", sans-serif !important;
+  * {
+    box-sizing: border-box;
+  }
+  & a {
+    color: #001f3f80;
+    text-decoration: none;
+  }
+  & p {
+    margin-bottom: 0;
+  }
+}
+.nuxt-link-exact-active {
+  color: #001f3f !important;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+.container-wrapper {
+  border-radius: 20px;
+  background: #e6e6e6;
+  box-shadow:  inset 3px 3px 6px #cfcfcf,
+  inset -3px -3px 6px #fdfdfd;
+  padding: 10px;
+}
+
+.wrapper {
+  border-radius: 20px;
+  background: #e6e6e6;
+  box-shadow:  3px 3px 6px #cfcfcf,
+              -3px -3px 6px #fdfdfd;
+  padding: 10px;
+}
+
+.w-100 {
+  width: 100%;
+}
+.w-70 {
+  width: 70%;
+}
+
+
+.transition-enter-active, .transition-leave-active {
+  transition: opacity .6s;
+}
+.transition-enter, .transition-leave-active {
+  opacity: 0;
+  filter: blur(6px);
+}
+
+
+.fade-enter-active {
+  transition: all .6s ease;
+}
+.fade-leave-active {
+  transition: all .2s ease;
+}
+.fade-enter, .fade-leave-to {
+  transform: translateX(60px);
+  opacity: 0;
+}
+
