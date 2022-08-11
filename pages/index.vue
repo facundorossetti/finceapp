@@ -44,7 +44,7 @@
                     <v-col cols="12" lg="4" align="center">
                       <h2 class="header-text" :class="{'mb-2': $vuetify.breakpoint.mdAndDown}">Dolar Oficial</h2>
                     </v-col>
-                    <v-col cols="12" lg="4" align="center">
+                    <v-col cols="12" lg="8" align="center">
                       <div class="d-flex flex-column align-center">
                         <div class="d-flex justify-space-between w-100">
                           <h2 class="mr-1 blue-text">Venta: </h2>
