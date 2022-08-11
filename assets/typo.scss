@@ -1,3 +1,10 @@
+.header-text {
+  font-family: "Ballinger-Regular", sans-serif;
+  font-size: 24px;
+  line-height: 36px;
+  font-weight: 600;
+}
+
 .header-text-mono {
   font-family: "BallingerMono-Medium", sans-serif;
   font-size: 30px;
@@ -16,6 +23,12 @@
   word-spacing: -0.3rem;
 }
 
+.large-text-bold {
+  font-size: 24px;
+  line-height: 30px;
+  font-weight: 600;
+}
+
 .normal-text {
   font-family: "Ballinger-Regular", sans-serif;
   color: #001f3f;
@@ -28,7 +41,7 @@
   font-family: "Ballinger-Regular", sans-serif;
   font-size: 16px;
   line-height: 24px;
-  font-weight: 600;
+  font-weight: 600 !important;
 }
 
 .comment-text {

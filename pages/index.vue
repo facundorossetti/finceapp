@@ -5,19 +5,24 @@
         <div class="wrapper">
           <v-expansion-panels v-model="panel">
             <v-expansion-panel>
-              <v-expansion-panel-header hide-actions>
+              <v-expansion-panel-header hide-actions class="pa-1" :class="{'pa-4': $vuetify.breakpoint.lgAndUp}">
                 <div class="d-flex align-center">
-                  <h2>Dolar Blue</h2>
-                  <v-spacer></v-spacer>
-                  <div class="d-flex flex-column align-center">
-                    <div class="d-flex justify-space-between w-100">
-                      <h2 class="mr-4 blue-text">Venta: </h2>
-                      <h2 class="mr-4 blue-text">$ {{ latest.blue.value_sell.toFixed(0) }}</h2>
-                      <h2 class="mr-4 green-text">Compra: </h2>
-                      <h2 class="green-text">$ {{ latest.blue.value_buy.toFixed(0) }}</h2>
-                    </div>
-                    <span class="mt-2 comment-text">Ultima actualizacion: {{ lastUpdate }}</span>
-                  </div>
+                  <v-row no-gutters>
+                    <v-col cols="12" lg="4" align="center">
+                      <h2 class="header-text" :class="{'mb-2': $vuetify.breakpoint.mdAndDown}">Dolar Blue</h2>
+                    </v-col>
+                    <v-col  cols="12" lg="8" align="center">
+                      <div class="d-flex flex-column align-center">
+                        <div class="d-flex justify-space-between w-100">
+                          <h2 class="mr-1 blue-text">Venta: </h2>
+                          <h2 class="mr-4 blue-text">$ {{ latest.blue.value_sell.toFixed(0) }}</h2>
+                          <h2 class="mr-1 green-text">Compra: </h2>
+                          <h2 class="green-text">$ {{ latest.blue.value_buy.toFixed(0) }}</h2>
+                        </div>
+                        <span class="mt-2 comment-text">Ultima actualizacion: {{ lastUpdate }}</span>
+                      </div>
+                    </v-col>
+                  </v-row>
                 </div>
               </v-expansion-panel-header>
               <v-expansion-panel-content>
@@ -33,19 +38,24 @@
         <div class="wrapper">
           <v-expansion-panels v-model="panel">
             <v-expansion-panel>
-              <v-expansion-panel-header hide-actions>
+              <v-expansion-panel-header hide-actions class="pa-1" :class="{'pa-4': $vuetify.breakpoint.lgAndUp}">
                 <div class="d-flex align-center">
-                  <h2>Dolar Oficial</h2>
-                  <v-spacer></v-spacer>
-                  <div class="d-flex flex-column align-center">
-                    <div class="d-flex justify-space-between w-100">
-                      <h2 class="mr-4 blue-text">Venta: </h2>
-                      <h2 class="mr-4 blue-text">$ {{ latest.oficial.value_sell.toFixed(0) }}</h2>
-                      <h2 class="mr-4 green-text">Compra: </h2>
-                      <h2 class="green-text">$ {{ latest.oficial.value_buy.toFixed(0) }}</h2>
-                    </div>
-                    <span class="mt-2 comment-text">Ultima actualizacion: {{ lastUpdate }}</span>
-                  </div>
+                  <v-row no-gutters>
+                    <v-col cols="12" lg="4" align="center">
+                      <h2 class="header-text" :class="{'mb-2': $vuetify.breakpoint.mdAndDown}">Dolar Oficial</h2>
+                    </v-col>
+                    <v-col cols="12" lg="4" align="center">
+                      <div class="d-flex flex-column align-center">
+                        <div class="d-flex justify-space-between w-100">
+                          <h2 class="mr-1 blue-text">Venta: </h2>
+                          <h2 class="mr-4 blue-text">$ {{ latest.oficial.value_sell.toFixed(0) }}</h2>
+                          <h2 class="mr-1 green-text">Compra: </h2>
+                          <h2 class="green-text">$ {{ latest.oficial.value_buy.toFixed(0) }}</h2>
+                        </div>
+                        <span class="mt-2 comment-text">Ultima actualizacion: {{ lastUpdate }}</span>
+                      </div>
+                    </v-col>
+                  </v-row>
                 </div>
               </v-expansion-panel-header>
               <v-expansion-panel-content>
@@ -61,26 +71,26 @@
     <v-row v-if="latest" class="container-wrapper mt-5" align="center">
       <v-col cols="12" align="center">
         <div class="wrapper d-flex justify-center align-center w-100">
-          <v-simple-table dense fixed-header class="mr-10" :class="{'w-70': $vuetify.breakpoint.lgAndUp}">
+          <v-simple-table dense :class="{'w-70 mr-10': $vuetify.breakpoint.lgAndUp}">
             <template #default>
               <thead>
                 <tr>
-                  <th></th>
-                  <th class="text-left">Name</th>
-                  <th v-for="cryptoHeader in cryptoHeaders" :key="cryptoHeader" class="text-right">
+                  <th v-if="$vuetify.breakpoint.lgAndUp"></th>
+                  <th class="text-left" :class="{'px-2': $vuetify.breakpoint.mdAndDown}">Name</th>
+                  <th v-for="cryptoHeader in cryptoHeaders" :key="cryptoHeader" class="text-right" :class="{'px-2': $vuetify.breakpoint.mdAndDown}">
                     {{ cryptoHeader }}
                   </th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="crypto in cryptos" :key="crypto.id">
-                  <td class="text-center">
-                    <img :src="crypto.image" :alt="crypto.id" width="20px">
+                  <td v-if="$vuetify.breakpoint.lgAndUp" class="text-center" :class="{'px-1': $vuetify.breakpoint.mdAndDown}">
+                    <img :src="crypto.image" :alt="crypto.id" width="20px" class="pt-1">
                   </td>
-                  <td class="text-left">{{ crypto.name }}</td>
-                  <td class="text-right">{{ formatNumber(crypto.current_price) }}</td>
-                  <td class="text-right">{{ crypto.price_change_percentage_24h }} %</td>
-                  <td class="text-right">{{ formatNumber(crypto.market_cap) }}</td>
+                  <td class="text-left" :class="{'px-2': $vuetify.breakpoint.mdAndDown}">{{ crypto.name }}</td>
+                  <td class="text-right" :class="{'px-2': $vuetify.breakpoint.mdAndDown}">$ {{ formatNumberMoneyRound(crypto.current_price) }}</td>
+                  <td class="text-right" :class="{'px-2': $vuetify.breakpoint.mdAndDown}">{{ formatNumberMoneyRound(crypto.price_change_percentage_24h) }} %</td>
+                  <td class="text-right" :class="{'px-2': $vuetify.breakpoint.mdAndDown}">$ {{ formatNumberMoneyRound(crypto.market_cap) }}</td>
                 </tr>
               </tbody>
             </template>
@@ -207,12 +217,15 @@ export default {
     this.getCurrencyData();
   },
   methods: {
-    formatNumber(number) {
-      const formatter = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-      });
-      return formatter.format(number);
+    formatNumberMoneyRound(number) {
+      if (number > 999999999) {
+        number = number / 1000000000;
+        return + number.toFixed(0) + ' B';
+      } else if (number > 999999) {
+        number = number / 1000000;
+        return + number.toFixed(0) + ' M';
+      }
+      return  number.toFixed(2);
     },
     async getCurrencyData() {
       const params = {
@@ -243,10 +256,13 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss">
 .v-expansion-panel {
   background-color: transparent !important;
   color: inherit !important;
+  &-content__wrap {
+    padding: 0 !important;
+  }
 }
 .v-expansion-panel::before {
   box-shadow: none;

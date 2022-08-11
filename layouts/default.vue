@@ -8,15 +8,15 @@
           class="mb-5"
         >
           <div class="header-text-mono">FinceApp</div>
-          <v-spacer></v-spacer>
+          <!-- <v-spacer></v-spacer> -->
           <!-- <button class="mr-5">Financieras</button>
           <button class="mr-5">Sobre nosotros</button>
           <button class="mr-5">Plataformas</button> -->
-          <nuxtLink to="/" class="mr-5 normal-text">Inicio</nuxtLink>
+          <!-- <nuxtLink to="/" class="mr-5 normal-text">Inicio</nuxtLink> -->
           <!-- <a to="/" class="mr-5 normal-text onDevelopment">Quienes somos?<div class="tooltiptext">Coming soon...</div></a>
           <a to="/" class="mr-5 normal-text onDevelopment">Plataformas<div class="tooltiptext">Coming soon...</div></a>
           <a to="/" class="mr-5 normal-text onDevelopment">Contacto<div class="tooltiptext">Coming soon...</div></a> -->
-          <nuxtLink to="/finanzas" class="normal-text">Mis Finanzas</nuxtLink>
+          <!-- <nuxtLink to="/finanzas" class="normal-text">Mis Finanzas</nuxtLink> -->
           <!-- <v-spacer></v-spacer>
           <div>
             <button class="mr-5 normal-text onDevelopment">Create Account</button>
@@ -50,5 +50,8 @@ export default {
 }
 .v-toolbar__content, .v-toolbar__extension {
   padding: 0;
+}
+.v-toolbar__content {
+  justify-content: center;
 }
 </style>
