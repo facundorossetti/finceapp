@@ -265,7 +265,7 @@ export default {
   }
 }
 .v-expansion-panel::before {
-  box-shadow: none;
+  box-shadow: none !important;
 }
 .v-data-table {
   background-color: transparent !important;
