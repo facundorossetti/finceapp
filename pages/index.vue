@@ -9,7 +9,7 @@
                 <div class="d-flex align-center">
                   <v-row no-gutters>
                     <v-col cols="12" lg="4" align="center">
-                      <h2 class="header-text" :class="{'mb-2': $vuetify.breakpoint.mdAndDown}">Dolar Blue</h2>
+                      <h2 class="header-text" :class="{'mb-2': $vuetify.breakpoint.mdAndDown}">Dólar Blue</h2>
                     </v-col>
                     <v-col  cols="12" lg="8" align="center">
                       <div class="d-flex flex-column align-center">
@@ -19,7 +19,7 @@
                           <h2 class="mr-1 green-text">Compra: </h2>
                           <h2 class="green-text">$ {{ latest.blue.value_buy.toFixed(0) }}</h2>
                         </div>
-                        <span class="mt-2 comment-text">Ultima actualizacion: {{ lastUpdate }}</span>
+                        <span class="mt-2 comment-text">Última actualización: {{ lastUpdate }}</span>
                       </div>
                     </v-col>
                   </v-row>
@@ -42,7 +42,7 @@
                 <div class="d-flex align-center">
                   <v-row no-gutters>
                     <v-col cols="12" lg="4" align="center">
-                      <h2 class="header-text" :class="{'mb-2': $vuetify.breakpoint.mdAndDown}">Dolar Oficial</h2>
+                      <h2 class="header-text" :class="{'mb-2': $vuetify.breakpoint.mdAndDown}">Dólar Oficial</h2>
                     </v-col>
                     <v-col cols="12" lg="8" align="center">
                       <div class="d-flex flex-column align-center">
@@ -52,7 +52,7 @@
                           <h2 class="mr-1 green-text">Compra: </h2>
                           <h2 class="green-text">$ {{ latest.oficial.value_buy.toFixed(0) }}</h2>
                         </div>
-                        <span class="mt-2 comment-text">Ultima actualizacion: {{ lastUpdate }}</span>
+                        <span class="mt-2 comment-text">Última actualización: {{ lastUpdate }}</span>
                       </div>
                     </v-col>
                   </v-row>
@@ -89,7 +89,7 @@
                   </td>
                   <td class="text-left" :class="{'px-2': $vuetify.breakpoint.mdAndDown}">{{ crypto.name }}</td>
                   <td class="text-right" :class="{'px-2': $vuetify.breakpoint.mdAndDown}">$ {{ formatNumberMoneyRound(crypto.current_price) }}</td>
-                  <td class="text-right" :class="{'px-2': $vuetify.breakpoint.mdAndDown}">{{ formatNumberMoneyRound(crypto.price_change_percentage_24h) }} %</td>
+                  <td class="text-right" :class="[{'px-2': $vuetify.breakpoint.mdAndDown}, , crypto.price_change_percentage_24h > 0 ? 'green-text' : 'red-text']">{{ formatNumberMoneyRound(crypto.price_change_percentage_24h) }} %</td>
                   <td class="text-right" :class="{'px-2': $vuetify.breakpoint.mdAndDown}">$ {{ formatNumberMoneyRound(crypto.market_cap) }}</td>
                 </tr>
               </tbody>
@@ -103,13 +103,52 @@
         </div>
       </v-col>
     </v-row>
-    <!-- <v-row v-if="latest" class="container-wrapper mt-5" align="center">
+    <v-row v-if="latest" class="container-wrapper mt-5" align="center">
       <v-col cols="12" align="center">
         <div class="wrapper d-flex justify-center align-center w-100">
-          otras monedas
+          <v-expansion-panels v-model="panelEstadisticas">
+            <v-expansion-panel>
+              <v-expansion-panel-header hide-actions class="pa-1" :class="{'pa-4': $vuetify.breakpoint.lgAndUp}">
+                <div class="d-flex align-center">
+                  <v-row no-gutters>
+                    <v-col cols="12" lg="4" align="center">
+                      <h2 class="header-text">Otras monedas y estadísticas</h2>
+                    </v-col>
+                  </v-row>
+                </div>
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <v-row no-gutters>
+                  <v-col cols="12" class="d-flex justify-center" align="center">
+                    <h2 class="mr-4 normal-text-bold">Euro Oficial:</h2>
+                    <p class="mr-4 blue-text">Venta: $ {{ latest.oficial_euro.value_sell.toFixed(0) }}</p>
+                    <p class="green-text">Compra: $ {{ latest.oficial_euro.value_sell.toFixed(0) }}</p>
+                  </v-col>
+                  <v-col cols="12" class="d-flex justify-center" align="center">
+                    <h2 class="mr-4 normal-text-bold">Euro Blue:</h2>
+                    <p class="mr-4 blue-text">Venta: $ {{ latest.blue_euro.value_sell.toFixed(0) }}</p>
+                    <p class="green-text">Compra: $ {{ latest.blue_euro.value_sell.toFixed(0) }}</p>
+                  </v-col>
+                  <v-col v-if="real" cols="12" class="d-flex justify-center" align="center">
+                    <h2 class="mr-4 normal-text-bold">Real Oficial:</h2>
+                    <p class="mr-4 blue-text">Venta: $ {{ real.venta.toFixed(0) }}</p>
+                    <p class="green-text">Compra: $ {{ real.compra.toFixed(0) }}</p>
+                  </v-col>
+                  <v-col v-if="bcraReservas" cols="12" class="d-flex justify-center" align="center">
+                    <h2 class="mr-4 normal-text-bold">Reservas BCRA:</h2>
+                    <p class="mr-4 blue-text">USD {{ bcraReservas.valor.toFixed(0) }}</p>
+                  </v-col>
+                  <v-col v-if="riesgoPais" cols="12" class="d-flex justify-center" align="center">
+                    <h2 class="mr-4 normal-text-bold">Riesgo Pais:</h2>
+                    <p class="mr-4 blue-text">{{ riesgoPais.valor }}</p>
+                  </v-col>
+                </v-row>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+          </v-expansion-panels>
         </div>
       </v-col>
-    </v-row> -->
+    </v-row>
   </div>
 </template>
 
@@ -133,11 +172,15 @@ export default {
         },
         labels: [],
       },
-      panel: 0,
+      panelEstadisticas: 0,
+      panel: 1,
       latest: null,
       historic: null,
       cryptos: null,
       cryptoHeaders: ["Current Price", "Change 24h", "Market Cap"],
+      real: null,
+      bcraReservas: null,
+      riesgoPais: null
     };
   },
   computed: {
@@ -156,7 +199,7 @@ export default {
         const blue = this.historic.filter((e) => e.source === "Blue");
         return [
           {
-            name: "Dolar blue - Venta",
+            name: "Dólar blue - Venta",
             data: blue.map((e) => {
               return {
                 x: e.date,
@@ -165,7 +208,7 @@ export default {
             }),
           },
           {
-            name: "Dolar Blue - Compra",
+            name: "Dólar Blue - Compra",
             data: blue.map((e) => {
               return {
                 x: e.date,
@@ -183,7 +226,7 @@ export default {
         const oficial = this.historic.filter((e) => e.source === "Oficial");
         return [
           {
-            name: "Dolar Oficial - Venta",
+            name: "Dólar Oficial - Venta",
             data: oficial.map((e) => {
               return {
                 x: e.date,
@@ -192,7 +235,7 @@ export default {
             }),
           },
           {
-            name: "Dolar Oficial - Compra",
+            name: "Dólar Oficial - Compra",
             data: oficial.map((e) => {
               return {
                 x: e.date,
@@ -229,7 +272,7 @@ export default {
     },
     async getCurrencyData() {
       const params = {
-        days: 66,
+        days: 16,
       };
       this.latest = (
         await this.$axios.get("https://api.bluelytics.com.ar/v2/latest")
@@ -250,7 +293,12 @@ export default {
           market_cap: e.market_cap
         }
       });
-      this.loader = false;
+      const real = (await this.$axios.get("https://api-dolar-argentina.herokuapp.com/api/real/nacion")).data;
+      this.real = real;
+      const bcraReservas = (await this.$axios.get("https://api-dolar-argentina.herokuapp.com/api/bcra/reservas")).data;
+      this.bcraReservas = bcraReservas;
+      const riesgoPais = (await this.$axios.get("https://api-dolar-argentina.herokuapp.com/api/riesgopais")).data;
+      this.riesgoPais = riesgoPais;
     },
   },
 };
