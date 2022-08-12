@@ -1,8 +1,10 @@
 <template>
   <v-app>
-    <div class="mobile-menu d-flex flex-column pa-4" :class="{'_active': activeMenu}">
-      <button class="login-btn normal-text">Login</button>
-      <button class="mt-5 login-btn  normal-text">Create Account</button>
+    <div class="mobile-menu pa-4" :class="{'_active': activeMenu}">
+      <div v-if="activeMenu" class="d-flex flex-column">
+        <button class="login-btn normal-text" @click="activeMenu = false">Login</button>
+        <button class="mt-5 login-btn  normal-text" @click="activeMenu = false">Create Account</button>
+      </div>
     </div>
     <v-main>
       <v-container>
@@ -94,11 +96,12 @@ export default {
   height: 1vh;
   width: 1vw;
   background: #e6e6e6;
-  transition: all .5s ease-in-out;
-  opacity: 0;
+  transition: all .4s ease-in-out;
+  opacity: 1;
   &._active {
     z-index: 40;
     top: 70px;
+    right: 0;
     height: 100vh;
     width: 100vw;
     opacity: 1;
