@@ -43,7 +43,7 @@
                     <v-text-field
                       v-model="pesoValor"
                       hide-details
-                      disabled
+                      readonly
                       dense
                       solo
                       prefix="AR$"
