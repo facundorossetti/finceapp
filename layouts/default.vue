@@ -23,7 +23,7 @@
             <button class="login-btn normal-text onDevelopment">Login</button>
           </div> -->
         </v-app-bar>
-        <Nuxt />
+        <Nuxt keep-alive />
       </v-container>
     </v-main>
   </v-app>

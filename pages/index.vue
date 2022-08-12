@@ -3,7 +3,7 @@
     <v-row v-if="latest" class="container-wrapper" align="center">
       <v-col cols="12" lg="6" align="center">
         <div class="wrapper">
-          <v-expansion-panels v-model="panel">
+          <v-expansion-panels v-model="panelDolarBlue">
             <v-expansion-panel>
               <v-expansion-panel-header hide-actions class="pa-1" :class="{'pa-4': $vuetify.breakpoint.lgAndUp}">
                 <div class="d-flex align-center">
@@ -26,6 +26,30 @@
                 </div>
               </v-expansion-panel-header>
               <v-expansion-panel-content>
+                <v-row class="my-2">
+                  <v-col cols="6" align="center">
+                    <v-text-field
+                      v-model="monedaExtranjeraValor"
+                      hide-details
+                      dense
+                      solo
+                      counter
+                      type="number"
+                      :prefix="monedaPrefix"
+                    >
+                    </v-text-field>
+                  </v-col>
+                  <v-col cols="6" align="center">
+                    <v-text-field
+                      v-model="pesoValor"
+                      hide-details
+                      disabled
+                      dense
+                      solo
+                      prefix="AR$"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
                 <div id="blue-chart">
                   <AreaChart :series="dolarBlueSeries" />
                 </div>
@@ -36,7 +60,7 @@
       </v-col>
       <v-col cols="12" lg="6" align="center">
         <div class="wrapper">
-          <v-expansion-panels v-model="panel">
+          <v-expansion-panels v-model="panelDolarOficial">
             <v-expansion-panel>
               <v-expansion-panel-header hide-actions class="pa-1" :class="{'pa-4': $vuetify.breakpoint.lgAndUp}">
                 <div class="d-flex align-center">
@@ -59,6 +83,30 @@
                 </div>
               </v-expansion-panel-header>
               <v-expansion-panel-content>
+                <v-row class="my-2">
+                  <v-col cols="6" align="center">
+                    <v-text-field
+                      v-model="monedaExtranjeraValor"
+                      hide-details
+                      dense
+                      solo
+                      counter
+                      type="number"
+                      :prefix="monedaPrefix"
+                    >
+                    </v-text-field>
+                  </v-col>
+                  <v-col cols="6" align="center">
+                    <v-text-field
+                      v-model="pesoValor"
+                      hide-details
+                      disabled
+                      dense
+                      solo
+                      prefix="AR$"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
                 <div id="oficial-chart">
                   <AreaChart :series="dolarOficialSeries"/>
                 </div>
@@ -68,7 +116,53 @@
         </div>
       </v-col>
     </v-row>
-    <v-row v-if="latest" class="container-wrapper mt-5" align="center">
+    <v-row class="container-wrapper mt-5" align="center">
+      <v-col cols="12" align="center">
+        <div class="wrapper d-flex justify-center align-center w-100">
+          <div class="d-flex align-center">
+            <v-row>
+              <!-- <v-col cols="12" align="center">
+                <v-select
+                  v-model="monedaPrefix"
+                  :items="['USD', '€']"
+                  :suffix="Moneda"
+                  solo
+                  dense
+                  hide-details
+                  item-color="primary"
+                  :menu-props="{ overflowY: true }"
+                ></v-select>
+                <p class="mb-0 mt-3">1 {{monedaPrefix}} = {{ latest ? latest.blue.value_sell : 'Sin Cotización'}}</p>
+                <p class="comment-text ma-0">Última actualización: {{ lastUpdate }}</p>
+              </v-col> -->
+              <v-col cols="6" align="center">
+                <v-text-field
+                  v-model="monedaExtranjeraValor"
+                  hide-details
+                  dense
+                  solo
+                  counter
+                  type="number"
+                  :prefix="monedaPrefix"
+                >
+                </v-text-field>
+              </v-col>
+              <v-col cols="6" align="center">
+                <v-text-field
+                  v-model="pesoValor"
+                  hide-details
+                  disabled
+                  dense
+                  solo
+                  prefix="AR$"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </div>
+        </div>
+      </v-col>
+    </v-row>
+    <v-row v-if="cryptos" class="container-wrapper mt-5" align="center">
       <v-col cols="12" align="center">
         <div class="wrapper d-flex justify-center align-center w-100">
           <v-simple-table dense :class="{'w-70 mr-10': $vuetify.breakpoint.lgAndUp}">
@@ -122,14 +216,14 @@
                   <v-col cols="12" class="d-flex justify-center" align="center">
                     <h2 class="mr-4 normal-text-bold">Euro Oficial:</h2>
                     <p class="mr-4 blue-text">Venta: $ {{ latest.oficial_euro.value_sell.toFixed(0) }}</p>
-                    <p class="green-text">Compra: $ {{ latest.oficial_euro.value_sell.toFixed(0) }}</p>
+                    <p class="green-text">Compra: $ {{ latest.oficial_euro.value_buy.toFixed(0) }}</p>
                   </v-col>
                   <v-col cols="12" class="d-flex justify-center" align="center">
                     <h2 class="mr-4 normal-text-bold">Euro Blue:</h2>
                     <p class="mr-4 blue-text">Venta: $ {{ latest.blue_euro.value_sell.toFixed(0) }}</p>
-                    <p class="green-text">Compra: $ {{ latest.blue_euro.value_sell.toFixed(0) }}</p>
+                    <p class="green-text">Compra: $ {{ latest.blue_euro.value_buy.toFixed(0) }}</p>
                   </v-col>
-                  <v-col v-if="real" cols="12" class="d-flex justify-center" align="center">
+                  <!-- <v-col v-if="real" cols="12" class="d-flex justify-center" align="center">
                     <h2 class="mr-4 normal-text-bold">Real Oficial:</h2>
                     <p class="mr-4 blue-text">Venta: $ {{ real.venta.toFixed(0) }}</p>
                     <p class="green-text">Compra: $ {{ real.compra.toFixed(0) }}</p>
@@ -141,7 +235,7 @@
                   <v-col v-if="riesgoPais" cols="12" class="d-flex justify-center" align="center">
                     <h2 class="mr-4 normal-text-bold">Riesgo Pais:</h2>
                     <p class="mr-4 blue-text">{{ riesgoPais.valor }}</p>
-                  </v-col>
+                  </v-col> -->
                 </v-row>
               </v-expansion-panel-content>
             </v-expansion-panel>
@@ -173,7 +267,8 @@ export default {
         labels: [],
       },
       panelEstadisticas: 0,
-      panel: 1,
+      panelDolarBlue: 1,
+      panelDolarOficial: 1,
       latest: null,
       historic: null,
       cryptos: null,
@@ -181,6 +276,9 @@ export default {
       real: null,
       bcraReservas: null,
       riesgoPais: null,
+      monedaPrefix: "USD",
+      monedaExtranjeraValor: 0,
+      pesoValor: 0,
     };
   },
   async fetch() {
@@ -216,7 +314,11 @@ export default {
       }
     },
     lastUpdate() {
-      return new Date(this.latest.last_update).toLocaleString("es-AR");
+      if (this.latest) {
+        return new Date(this.latest.last_update).toLocaleString("es-AR");
+      } else {
+        return "Sin datos";
+      }
     },
     dolarBlueSeries() {
       if (this.historic) {
@@ -274,6 +376,10 @@ export default {
     },
   },
   watch: {
+    monedaExtranjeraValor(val) {
+      const number = val * 285;
+      this.pesoValor = this.formatNumberToMoney(number);
+    },
     cryptos(val) {
       val.forEach((e) => {
         this.pieChartOptions.labels.push(e.name);
@@ -281,6 +387,12 @@ export default {
     }
   },
   methods: {
+    formatNumberToMoney(number) {
+      const formatter = new Intl.NumberFormat('es-AR', {
+        style: 'decimal',
+      });
+      return formatter.format(number)
+    },
     formatNumberMoneyRound(number) {
       if (number > 999999999) {
         number = number / 1000000000;
@@ -312,5 +424,13 @@ export default {
 th {
   background: transparent !important;
 }
+</style>
 
+<style lang="scss" scoped>
+::v-deep .v-input__slot {
+  border-radius: 12px !important;
+  background: #e6e6e6 !important;
+  box-shadow:  inset 3px 3px 6px #cfcfcf,
+              inset -3px -3px 6px #fdfdfd !important;
+}
 </style>
