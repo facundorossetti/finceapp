@@ -83,30 +83,6 @@
                 </div>
               </v-expansion-panel-header>
               <v-expansion-panel-content>
-                <v-row class="my-2">
-                  <v-col cols="6" align="center">
-                    <v-text-field
-                      v-model="monedaExtranjeraValor"
-                      hide-details
-                      dense
-                      solo
-                      counter
-                      type="number"
-                      :prefix="monedaPrefix"
-                    >
-                    </v-text-field>
-                  </v-col>
-                  <v-col cols="6" align="center">
-                    <v-text-field
-                      v-model="pesoValor"
-                      hide-details
-                      disabled
-                      dense
-                      solo
-                      prefix="AR$"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
                 <div id="oficial-chart">
                   <AreaChart :series="dolarOficialSeries"/>
                 </div>
@@ -116,12 +92,12 @@
         </div>
       </v-col>
     </v-row>
-    <v-row class="container-wrapper mt-5" align="center">
+    <!-- <v-row class="container-wrapper mt-5" align="center">
       <v-col cols="12" align="center">
         <div class="wrapper d-flex justify-center align-center w-100">
           <div class="d-flex align-center">
             <v-row>
-              <!-- <v-col cols="12" align="center">
+              <v-col cols="12" align="center">
                 <v-select
                   v-model="monedaPrefix"
                   :items="['USD', '€']"
@@ -134,7 +110,7 @@
                 ></v-select>
                 <p class="mb-0 mt-3">1 {{monedaPrefix}} = {{ latest ? latest.blue.value_sell : 'Sin Cotización'}}</p>
                 <p class="comment-text ma-0">Última actualización: {{ lastUpdate }}</p>
-              </v-col> -->
+              </v-col>
               <v-col cols="6" align="center">
                 <v-text-field
                   v-model="monedaExtranjeraValor"
@@ -161,7 +137,7 @@
           </div>
         </div>
       </v-col>
-    </v-row>
+    </v-row> -->
     <v-row v-if="cryptos" class="container-wrapper mt-5" align="center">
       <v-col cols="12" align="center">
         <div class="wrapper d-flex justify-center align-center w-100">
@@ -377,7 +353,7 @@ export default {
   },
   watch: {
     monedaExtranjeraValor(val) {
-      const number = val * 285;
+      const number = val * this.latest.blue.value_sell;
       this.pesoValor = this.formatNumberToMoney(number);
     },
     cryptos(val) {
