@@ -127,7 +127,7 @@
                 <v-text-field
                   v-model="pesoValor"
                   hide-details
-                  disabled
+                  readonly
                   dense
                   solo
                   prefix="AR$"
@@ -257,30 +257,30 @@ export default {
       pesoValor: 0,
     };
   },
-  // async fetch() {
-  //   const params = {
-  //     days: 16,
-  //   };
-  //   this.latest = (
-  //     await this.$axios.get("https://api.bluelytics.com.ar/v2/latest")
-  //   ).data;
-  //   this.historic = (
-  //     await this.$axios.get("https://api.bluelytics.com.ar/v2/evolution.json", {
-  //       params,
-  //     })
-  //   ).data;
-  //   const cryptos = (await this.$axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=5&page=1&sparkline=false")).data;
-  //   this.cryptos = cryptos.map((e) => {
-  //     return {
-  //       id: e.id,
-  //       image: e.image,
-  //       name: e.name,
-  //       current_price: e.current_price,
-  //       price_change_percentage_24h: e.price_change_percentage_24h,
-  //       market_cap: e.market_cap
-  //     }
-  //   });
-  // },
+  async fetch() {
+    const params = {
+      days: 16,
+    };
+    this.latest = (
+      await this.$axios.get("https://api.bluelytics.com.ar/v2/latest")
+    ).data;
+    this.historic = (
+      await this.$axios.get("https://api.bluelytics.com.ar/v2/evolution.json", {
+        params,
+      })
+    ).data;
+    const cryptos = (await this.$axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=5&page=1&sparkline=false")).data;
+    this.cryptos = cryptos.map((e) => {
+      return {
+        id: e.id,
+        image: e.image,
+        name: e.name,
+        current_price: e.current_price,
+        price_change_percentage_24h: e.price_change_percentage_24h,
+        market_cap: e.market_cap
+      }
+    });
+  },
   computed: {
     pieChartSeries() {
       if (this.cryptos) {

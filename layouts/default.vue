@@ -14,7 +14,7 @@
           <div class="header-text-mono">FinceApp</div>
           <v-spacer></v-spacer>
           <button class="mobile-menu-btn" :class="{'_active': activeMenu}" @click="activeMenu = !activeMenu">
-            <transition name="fade" mode="out-in">
+            <transition name="fade" :duration="250" mode="out-in">
               <v-icon v-if="!activeMenu" key="menuClosed">mdi-menu</v-icon>
               <v-icon v-else key="menuOpened">mdi-close</v-icon>
             </transition>
