@@ -66,26 +66,27 @@ body::-webkit-scrollbar {
 }
 
 
-.fade-enter-active {
-  transition: all .6s ease;
-}
-.fade-leave-active {
-  transition: all .2s ease;
+.fade-enter-active, .fade-leave-active {
+  transition: all .2s;
 }
 .fade-enter, .fade-leave-to {
-  transform: translateX(60px);
   opacity: 0;
 }
 
 
 @media screen and (max-width: 768px) {
+  .row {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+  }
   .wrapper {
     border-radius: 16px;
-    padding: 8px;
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
   .container-wrapper {
     border-radius: 16px;
     background: #e6e6e6;
-    padding: 10px 0;
+    padding: 0;
   }
 }
