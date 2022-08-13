@@ -36,6 +36,7 @@
                       counter
                       type="number"
                       :prefix="monedaPrefix"
+                      @focus="monedaExtranjeraValor = null"
                     >
                     </v-text-field>
                   </v-col>
@@ -140,14 +141,14 @@
     </v-row> -->
     <v-row v-if="cryptos" class="container-wrapper mt-5" align="center">
       <v-col cols="12" align="center">
-        <div class="wrapper d-flex justify-center align-center w-100">
+        <div class="wrapper d-lg-flex justify-center align-center w-100">
           <v-simple-table dense :class="{'w-70 mr-10': $vuetify.breakpoint.lgAndUp}">
             <template #default>
               <thead>
                 <tr>
                   <th v-if="$vuetify.breakpoint.lgAndUp"></th>
-                  <th class="text-left" :class="{'px-1': $vuetify.breakpoint.mdAndDown}">Name</th>
-                  <th v-for="cryptoHeader in cryptoHeaders" :key="cryptoHeader" class="text-right" :class="{'px-2': $vuetify.breakpoint.mdAndDown}">
+                  <th class="text-left" :class="{'px-0': $vuetify.breakpoint.mdAndDown}">Name</th>
+                  <th v-for="cryptoHeader in cryptoHeaders" :key="cryptoHeader" class="text-right" :class="{'px-0': $vuetify.breakpoint.mdAndDown}">
                     {{ cryptoHeader }}
                   </th>
                 </tr>
@@ -157,10 +158,10 @@
                   <td v-if="$vuetify.breakpoint.lgAndUp" class="text-center" :class="{'px-1': $vuetify.breakpoint.mdAndDown}">
                     <img :src="crypto.image" :alt="crypto.id" width="20px" class="pt-1">
                   </td>
-                  <td class="text-left" :class="{'px-1': $vuetify.breakpoint.mdAndDown}">{{ crypto.name }}</td>
-                  <td class="text-right" :class="{'px-1': $vuetify.breakpoint.mdAndDown}">$ {{ formatNumberMoneyRound(crypto.current_price) }}</td>
-                  <td class="text-right" :class="[{'px-2': $vuetify.breakpoint.mdAndDown}, , crypto.price_change_percentage_24h > 0 ? 'green-text' : 'red-text']">{{ formatNumberMoneyRound(crypto.price_change_percentage_24h) }} %</td>
-                  <td class="text-right" :class="{'px-2': $vuetify.breakpoint.mdAndDown}">$ {{ formatNumberMoneyRound(crypto.market_cap) }}</td>
+                  <td class="text-left" :class="{'px-0': $vuetify.breakpoint.mdAndDown}">{{ crypto.name }}</td>
+                  <td class="text-right" :class="{'px-0': $vuetify.breakpoint.mdAndDown}">USD {{ formatNumberMoneyRound(crypto.current_price) }}</td>
+                  <td class="text-right" :class="[{'px-0': $vuetify.breakpoint.mdAndDown}, , crypto.price_change_percentage_24h > 0 ? 'green-text' : 'red-text']">{{ formatNumberMoneyRound(crypto.price_change_percentage_24h) }} %</td>
+                  <td class="text-right" :class="{'px-0': $vuetify.breakpoint.mdAndDown}">USD {{ formatNumberMoneyRound(crypto.market_cap) }}</td>
                 </tr>
               </tbody>
             </template>
