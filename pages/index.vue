@@ -1,6 +1,7 @@
 <template>
   <transition>
     <div v-if="show" key="show">
+      <v-btn @click="fetchSomething">FETCH</v-btn>
       <v-row v-if="latest" class="container-wrapper" align="center">
         <v-col cols="12" lg="6" align="center">
           <div class="wrapper">
@@ -374,6 +375,10 @@ export default {
     this.setShow();
   },
   methods: {
+    async fetchSomething() {
+      const user = await this.$axios.$get('/users')
+      console.log(user);
+    },
     setShow() {
       setTimeout(() => {
         this.show = true;
