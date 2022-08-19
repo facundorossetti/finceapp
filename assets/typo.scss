@@ -31,7 +31,7 @@
 
 .normal-text {
   font-family: "Ballinger-Regular", sans-serif;
-  color: #001f3f;
+  color: var(--v-text-base);
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
@@ -53,13 +53,13 @@
 
 .comment-text {
   font-family: "Ballinger-Regular", sans-serif;
-  color: #001f3f80;
+  color: var(--v-textshade-base);
   font-size: 12px;
   font-weight: 400;
 }
 
 .blue-text {
-  color: #006286;
+  color: var(--v-bluetext-base);
 }
 
 .green-text {

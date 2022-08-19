@@ -48,9 +48,30 @@ export default {
   vuetify: {
     customVariables: ['@/assets/variables.scss'],
     theme: {
-      dark: false,
+      options: {
+        customProperties: true
+      },
       themes: {
-        dark: {},
+        dark: {
+          lightest: '#001429',
+          background: '#001f3f',
+          text: '#e6e6e6',
+          textshade: '#e6e6e680',
+          shadow1: '#001429',
+          shadow2: '#002e5c',
+          shadow3: '#001429',
+          bluetext: '#85c0d6',
+        },
+        light: {
+          lightest: '#ffffff',
+          background: '#e6e6e6',
+          text: '#001f3f',
+          textshade: '#001f3f80',
+          shadow1: '#cfcfcf',
+          shadow2: '#fdfdfd',
+          shadow3: '#c4c4c4',
+          bluetext: '#006286'
+        },
       },
     },
   },

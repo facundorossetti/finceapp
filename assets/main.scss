@@ -8,8 +8,8 @@
 }
 
 #app {
-  background: #e6e6e6;
-  color: #001f3f;
+  background: var(--v-background-base);
+  color: var(--v-text-base);
 }
 
 .v-application {
@@ -18,7 +18,7 @@
     box-sizing: border-box;
   }
   & a {
-    color: #001f3f80;
+    color: var(--v-textshade-base);
     text-decoration: none;
   }
   & p {
@@ -26,7 +26,7 @@
   }
 }
 .nuxt-link-exact-active {
-  color: #001f3f !important;
+  color: var(--v-text-base) !important;
 }
 
 body::-webkit-scrollbar {
@@ -35,17 +35,17 @@ body::-webkit-scrollbar {
 
 .container-wrapper {
   border-radius: 20px;
-  background: #e6e6e6;
-  box-shadow:  inset 3px 3px 6px #cfcfcf,
-  inset -3px -3px 6px #fdfdfd;
+  background: var(--v-background-base);
+  box-shadow:  inset 3px 3px 6px var(--v-shadow1-base),
+  inset -3px -3px 6px var(--v-shadow2-base);
   padding: 10px;
 }
 
 .wrapper {
   border-radius: 20px;
-  background: #e6e6e6;
-  box-shadow:  3px 3px 6px #cfcfcf,
-              -3px -3px 6px #fdfdfd;
+  background: var(--v-background-base);
+  box-shadow:  3px 3px 6px var(--v-shadow1-base),
+              -3px -3px 6px var(--v-shadow2-base);
   padding: 10px;
 }
 
@@ -89,7 +89,7 @@ body::-webkit-scrollbar {
   }
   .container-wrapper {
     border-radius: 16px;
-    background: #e6e6e6;
+    background: var(--v-background-base);
     padding: 0;
   }
 }

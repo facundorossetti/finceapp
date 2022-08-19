@@ -43,7 +43,7 @@ export default {
             opacityFrom: 1,
             opacityTo: 0.9,
           },
-          colors: ["#006286", "#00AB8B"],
+          colors: ["var(--v-bluetext-base)", "#00AB8B"],
         },
         tooltip: {
           enabled: true,
@@ -73,7 +73,7 @@ export default {
           opposite: false,
           labels: {
             style: {
-              colors: "#001f3f",
+              colors: "var(--v-text-base)",
             },
           },
           axisBorder: {
@@ -87,19 +87,22 @@ export default {
           type: "datetime",
           labels: {
             style: {
-              colors: "#001f3f",
+              colors: "var(--v-text-base)",
             },
           },
           axisBorder: {
-            color: "#001f3f",
+            color: "var(--v-text-base)",
           },
           axisTicks: {
-            color: "#001f3f",
+            color: "var(--v-text-base)",
           },
         },
         legend: {
           horizontalAlign: "left",
           position: 'top',
+          labels: {
+              useSeriesColors: true
+          },
         },
       },
     };

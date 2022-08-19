@@ -263,15 +263,15 @@ export default {
 
 <style lang="scss" scoped>
 .v-data-table, .v-sheet {
-  background-color: #e6e6e6 !important;
+  background-color: var(--v-background-base) !important;
 }
 tr:hover {
   background: transparent !important;
 }
 ::v-deep .v-input__slot {
   border-radius: 12px !important;
-  background: #e6e6e6 !important;
-  box-shadow:  inset 3px 3px 6px #cfcfcf,
-              inset -3px -3px 6px #fdfdfd !important;
+  background: var(--v-background-base) !important;
+  box-shadow:  inset 3px 3px 6px var(--v-shadow1-base),
+              inset -3px -3px 6px var(--v-shadow2-base) !important;
 }
 </style>

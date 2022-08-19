@@ -181,7 +181,7 @@
             <v-expansion-panel>
               <v-expansion-panel-header hide-actions class="pa-1" :class="{'pa-4': $vuetify.breakpoint.lgAndUp}">
                 <div class="d-flex align-center">
-                  <v-row no-gutters>
+                  <v-row no-gutters justify="center">
                     <v-col cols="12" lg="4" align="center">
                       <h2 class="header-text">Otras monedas</h2>
                     </v-col>
@@ -406,8 +406,8 @@ th {
 <style lang="scss" scoped>
 ::v-deep .v-input__slot {
   border-radius: 12px !important;
-  background: #e6e6e6 !important;
-  box-shadow:  inset 3px 3px 6px #cfcfcf,
-              inset -3px -3px 6px #fdfdfd !important;
+  background: var(--v-background-base) !important;
+  box-shadow:  inset 3px 3px 6px var(--v-shadow1-base),
+              inset -3px -3px 6px var(--v-shadow2-base) !important;
 }
 </style>

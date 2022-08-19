@@ -13,9 +13,24 @@
           color="transparent"
           class="mb-5"
         >
-          <div class="header-text-mono">FinceApp</div>
-          <v-spacer></v-spacer>
-          <button class="mobile-menu-btn" :class="{'_active': activeMenu}" @click="activeMenu = !activeMenu">
+          <div v-if="$vuetify.breakpoint.smAndUp" class="header-text-mono">FinceApp</div>
+          <v-spacer v-if="$vuetify.breakpoint.smAndUp"></v-spacer>
+          <v-btn
+            icon
+            :ripple="false"
+            class="ml-2"
+            depressed
+            small
+            @click="changeTheme"
+          >
+            <v-icon color="text" large>
+              {{ $vuetify.theme.dark ? 'mdi-weather-night' : 'mdi-white-balance-sunny' }}
+            </v-icon>
+          </v-btn>
+          <v-spacer v-if="$vuetify.breakpoint.smAndDown"></v-spacer>
+          <div v-if="$vuetify.breakpoint.xsOnly" class="header-text-mono">FinceApp</div>
+          <v-spacer v-if="$vuetify.breakpoint.xsOnly"></v-spacer>
+          <button v-if="$vuetify.breakpoint.xsOnly" class="mobile-menu-btn" :class="{'_active': activeMenu}" @click="activeMenu = !activeMenu">
             <transition name="fade" :duration="250" mode="out-in">
               <v-icon v-if="!activeMenu" key="menuClosed">mdi-menu</v-icon>
               <v-icon v-else key="menuOpened">mdi-close</v-icon>
@@ -50,20 +65,25 @@ export default {
       activeMenu: false,
     }
   },
+  methods: {
+    changeTheme() {
+      this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
+    },
+  }
 }
 </script>
 
 <style lang="scss">
 .login-btn {
   border-radius: 10px;
-  background: linear-gradient(145deg, #f6f6f6, #cfcfcf);
-  box-shadow:  2px 2px 2px #c4c4c4,
-              -2px -2px 2px #ffffff;
+  background: linear-gradient(145deg, var(--v-shadow2-base), var(--v-shadow1-base));
+  box-shadow:  2px 2px 2px var(--v-shadow3-base),
+              -2px -2px 2px var(--v-lightest-base);
   padding: 8px 16px;
   &:active {
-    background: linear-gradient(145deg, #cfcfcf, #f6f6f6);
-    box-shadow: inset 2px 2px 2px #c4c4c4,
-                inset -2px -2px 2px #ffffff;
+    background: linear-gradient(145deg, var(--v-shadow1-base), var(--v-shadow2-base));
+    box-shadow: inset 2px 2px 2px var(--v-shadow3-base),
+                inset -2px -2px 2px var(--v-lightest-base);
   }
 }
 .v-toolbar__content, .v-toolbar__extension {
@@ -75,14 +95,14 @@ export default {
 .mobile-menu-btn {
   z-index: 999;
   border-radius: 6px;
-  background: linear-gradient(145deg, #f6f6f6, #cfcfcf);
-  box-shadow:  2px 2px 2px #c4c4c4,
-              -2px -2px 2px #ffffff;
+  background: linear-gradient(145deg, var(--v-shadow2-base), var(--v-shadow1-base));
+  box-shadow:  2px 2px 2px var(--v-shadow3-base),
+              -2px -2px 2px var(--v-lightest-base);
   padding: 4px 6px;
   &._active {
-    background: linear-gradient(145deg, #cfcfcf, #f6f6f6);
-    box-shadow: inset 2px 2px 2px #c4c4c4,
-                inset -2px -2px 2px #ffffff;
+    background: linear-gradient(145deg, var(--v-shadow1-base), var(--v-shadow2-base));
+    box-shadow: inset 2px 2px 2px var(--v-shadow3-base),
+                inset -2px -2px 2px var(--v-lightest-base);
   }
   .mdi {
     font-size: 28px;
@@ -95,7 +115,7 @@ export default {
   right: 0;
   height: 1vh;
   width: 1vw;
-  background: #e6e6e6;
+  background: var(--v-background-base);
   transition: all .4s ease-in-out;
   opacity: 1;
   &._active {
