@@ -7,12 +7,16 @@
   src: url('~@/assets/fonts/ballinger/ballinger-regular.woff2') format('woff2'), url('~@/assets/fonts/ballinger/ballinger-regular.woff') format('woff');
 }
 
-#app {
-  background: var(--v-background-base);
-  color: var(--v-text-base);
+body {
+  background-color: var(--v-background-base);
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .v-application {
+  background-color: var(--v-background-base) !important;
+  color: var(--v-text-base) !important;
   font-family: "Ballinger-Regular", sans-serif !important;
   * {
     box-sizing: border-box;
@@ -29,10 +33,6 @@
   color: var(--v-text-base) !important;
 }
 
-body::-webkit-scrollbar {
-  display: none;
-}
-
 .container-wrapper {
   border-radius: 20px;
   background: var(--v-background-base);
@@ -42,6 +42,7 @@ body::-webkit-scrollbar {
 }
 
 .wrapper {
+  position: relative;
   border-radius: 20px;
   background: var(--v-background-base);
   box-shadow:  3px 3px 6px var(--v-shadow1-base),
@@ -73,6 +74,16 @@ body::-webkit-scrollbar {
 
 .fade-enter-from,
 .fade-leave-to {
+  opacity: 0;
+}
+
+.fade-progress-bar-enter-active,
+.fade-progress-bar-leave-active {
+  transition: opacity 2s ease;
+}
+
+.fade-progress-bar-enter-from,
+.fade-progress-bar-leave-to {
   opacity: 0;
 }
 

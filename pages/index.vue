@@ -3,6 +3,7 @@
     <v-row v-if="latest" class="container-wrapper" align="center">
       <v-col cols="12" lg="6" align="center">
         <div class="wrapper">
+          <spinner :disabled="!$fetchState.pending"></spinner>
           <v-expansion-panels v-model="panelDolarBlue">
             <v-expansion-panel>
               <v-expansion-panel-header hide-actions class="pa-1" :class="{'pa-4': $vuetify.breakpoint.lgAndUp}">
@@ -61,6 +62,7 @@
       </v-col>
       <v-col cols="12" lg="6" align="center">
         <div class="wrapper">
+          <spinner :disabled="!$fetchState.pending"></spinner>
           <v-expansion-panels v-model="panelDolarOficial">
             <v-expansion-panel>
               <v-expansion-panel-header hide-actions class="pa-1" :class="{'pa-4': $vuetify.breakpoint.lgAndUp}">
@@ -142,6 +144,7 @@
     <v-row v-if="cryptos" class="container-wrapper mt-5" align="center">
       <v-col cols="12" align="center">
         <div class="wrapper d-lg-flex justify-center align-center w-100">
+          <spinner :disabled="!$fetchState.pending"></spinner>
           <v-simple-table dense :class="{'w-70 mr-10': $vuetify.breakpoint.lgAndUp}">
             <template #default>
               <thead>
@@ -177,6 +180,7 @@
     <v-row v-if="latest" class="container-wrapper mt-5" align="center">
       <v-col cols="12" align="center">
         <div class="wrapper d-flex justify-center align-center w-100">
+          <spinner :disabled="!$fetchState.pending"></spinner>
           <v-expansion-panels v-model="panelEstadisticas">
             <v-expansion-panel>
               <v-expansion-panel-header hide-actions class="pa-1" :class="{'pa-4': $vuetify.breakpoint.lgAndUp}">
@@ -232,7 +236,6 @@ export default {
   transition: 'transition',
   data() {
     return {
-      loader: true,
       pieChartOptions: {
         chart: {
           width: 380,
