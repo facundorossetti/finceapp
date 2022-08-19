@@ -45,8 +45,17 @@
           </button>
           <button
             class="login-btn"
+            :class="{'active': loading}"
+            @click="loading = true"
           >
-            Login
+            <v-progress-circular
+              v-if="loading"
+              indeterminate
+              small
+              :size="20"
+              color="bluetext"
+            ></v-progress-circular>
+            <span v-else>Login</span>
           </button>
         </v-card-actions>
       </v-card>
@@ -94,6 +103,7 @@ export default {
   data() {
     return {
       loginAndSignupDialog: false,
+      loading: false,
       user: {
         email: null,
         password: null
@@ -120,7 +130,7 @@ export default {
   box-shadow:  2px 2px 2px var(--v-shadow3-base),
               -2px -2px 2px var(--v-lightest-base);
   padding: 8px 16px;
-  &:active {
+  &.active {
     background: linear-gradient(145deg, var(--v-shadow1-base), var(--v-shadow2-base));
     box-shadow: inset 2px 2px 2px var(--v-shadow3-base),
                 inset -2px -2px 2px var(--v-lightest-base);
