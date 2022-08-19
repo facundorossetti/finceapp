@@ -69,7 +69,7 @@ export default {
           text: '#001f3f',
           textshade: '#001f3f80',
           shadow1: '#cfcfcf',
-          shadow2: '#fdfdfd',
+          shadow2: '#f6f6f6',
           shadow3: '#c4c4c4',
           bluetext: '#006286'
         },

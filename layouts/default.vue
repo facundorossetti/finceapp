@@ -13,7 +13,7 @@
           color="transparent"
           class="mb-5"
         >
-          <div v-if="$vuetify.breakpoint.smAndUp" class="header-text-mono">FinceApp</div>
+          <h2 v-if="$vuetify.breakpoint.smAndUp" class="header-text-mono">FinceApp</h2>
           <v-spacer v-if="$vuetify.breakpoint.smAndUp"></v-spacer>
           <v-btn
             icon
@@ -28,7 +28,7 @@
             </v-icon>
           </v-btn>
           <v-spacer v-if="$vuetify.breakpoint.smAndDown"></v-spacer>
-          <div v-if="$vuetify.breakpoint.xsOnly" class="header-text-mono">FinceApp</div>
+          <h2 v-if="$vuetify.breakpoint.xsOnly" class="header-text-mono">FinceApp</h2>
           <v-spacer v-if="$vuetify.breakpoint.xsOnly"></v-spacer>
           <button v-if="$vuetify.breakpoint.xsOnly" class="mobile-menu-btn" :class="{'_active': activeMenu}" @click="activeMenu = !activeMenu">
             <transition name="fade" :duration="250" mode="out-in">
@@ -111,20 +111,16 @@ export default {
 .mobile-menu {
   z-index: -1;
   position: absolute;
-  top: 0;
+  top: 70px;
   right: 0;
-  height: 1vh;
-  width: 1vw;
+  height: 0;
+  width: 0;
   background: var(--v-background-base);
   transition: all .2s ease-in-out;
-  opacity: 1;
   &._active {
     z-index: 40;
-    top: 70px;
-    right: 0;
     height: 100vh;
     width: 100vw;
-    opacity: 1;
   }
 }
 </style>
