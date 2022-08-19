@@ -2,10 +2,55 @@
   <v-app>
     <div class="mobile-menu pa-4" :class="{'_active': activeMenu}">
       <div v-if="activeMenu" class="d-flex flex-column">
-        <button class="login-btn normal-text" @click="activeMenu = false">Login</button>
-        <button class="mt-5 login-btn  normal-text" @click="activeMenu = false">Create Account</button>
+        <button class="login-btn normal-text" @click="openLoginDialog">Login</button>
+        <button class="mt-5 login-btn  normal-text" @click="openLoginDialog">Create Account</button>
       </div>
     </div>
+    <v-dialog v-model="loginAndSignupDialog" max-width="500px" overlay-opacity="0.5" content-class="login-dialog">
+      <v-card color="background">
+        <v-card-title class="justify-center px-4 pt-6">
+          <span class="text-h5">Login</span>
+        </v-card-title>
+        <v-card-text class="px-4">
+          <v-row no-gutters>
+            <v-col cols="12" class="pb-4">
+              <v-text-field
+                v-model="user.email"
+                hide-details
+                dense
+                solo
+                label="Email"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field
+                v-model="user.password"
+                type="password"
+                hide-details
+                dense
+                solo
+                label="Password"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+        </v-card-text>
+
+        <v-card-actions class="px-4 pb-6">
+          <v-spacer></v-spacer>
+          <button
+            class="login-btn mr-4"
+            @click="loginAndSignupDialog = false"
+          >
+            Cancelar
+          </button>
+          <button
+            class="login-btn"
+          >
+            Login
+          </button>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <v-main>
       <v-container>
         <v-app-bar
@@ -36,20 +81,6 @@
               <v-icon v-else key="menuOpened">mdi-close</v-icon>
             </transition>
           </button>
-          <!-- <v-spacer></v-spacer> -->
-          <!-- <button class="mr-5">Financieras</button>
-          <button class="mr-5">Sobre nosotros</button>
-          <button class="mr-5">Plataformas</button> -->
-          <!-- <nuxtLink to="/" class="mr-5 normal-text">Inicio</nuxtLink> -->
-          <!-- <a to="/" class="mr-5 normal-text onDevelopment">Quienes somos?<div class="tooltiptext">Coming soon...</div></a>
-          <a to="/" class="mr-5 normal-text onDevelopment">Plataformas<div class="tooltiptext">Coming soon...</div></a>
-          <a to="/" class="mr-5 normal-text onDevelopment">Contacto<div class="tooltiptext">Coming soon...</div></a> -->
-          <!-- <nuxtLink to="/finanzas" class="normal-text">Mis Finanzas</nuxtLink> -->
-          <!-- <v-spacer></v-spacer>
-          <div>
-            <button class="mr-5 normal-text onDevelopment">Create Account</button>
-            <button class="login-btn normal-text onDevelopment">Login</button>
-          </div> -->
         </v-app-bar>
         <Nuxt keep-alive />
       </v-container>
@@ -62,10 +93,19 @@ export default {
   name: 'DefaultLayout',
   data() {
     return {
+      loginAndSignupDialog: false,
+      user: {
+        email: null,
+        password: null
+      },
       activeMenu: false,
     }
   },
   methods: {
+    openLoginDialog() {
+      this.activeMenu = false;
+      this.loginAndSignupDialog = true;
+    },
     changeTheme() {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
     },
@@ -122,5 +162,17 @@ export default {
     height: 100vh;
     width: 100vw;
   }
+}
+.login-dialog {
+  border-radius: 20px;
+}
+</style>
+
+<style lang="scss" scoped>
+::v-deep .v-input__slot {
+  border-radius: 12px !important;
+  background: var(--v-background-base) !important;
+  box-shadow:  inset 3px 3px 6px var(--v-shadow1-base),
+              inset -3px -3px 6px var(--v-shadow2-base) !important;
 }
 </style>
