@@ -3,7 +3,7 @@
     <v-row v-if="latest" class="container-wrapper" align="center">
       <v-col cols="12" lg="6" align="center">
         <div class="wrapper">
-          <spinner :disabled="!$fetchState.pending"></spinner>
+          <spinner :disabled="latest"></spinner>
           <v-expansion-panels v-model="panelDolarBlue">
             <v-expansion-panel>
               <v-expansion-panel-header hide-actions class="pa-1" :class="{'pa-4': $vuetify.breakpoint.lgAndUp}">
