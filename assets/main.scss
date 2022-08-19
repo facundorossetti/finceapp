@@ -79,13 +79,14 @@ body {
 
 .fade-progress-bar-enter-active,
 .fade-progress-bar-leave-active {
-  transition: opacity 2s ease;
+  transition: opacity 1s ease;
 }
 
 .fade-progress-bar-enter-from,
 .fade-progress-bar-leave-to {
   opacity: 0;
 }
+
 
 
 @media screen and (max-width: 768px) {

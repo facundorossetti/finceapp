@@ -116,7 +116,7 @@ export default {
   height: 1vh;
   width: 1vw;
   background: var(--v-background-base);
-  transition: all .4s ease-in-out;
+  transition: all .2s ease-in-out;
   opacity: 1;
   &._active {
     z-index: 40;

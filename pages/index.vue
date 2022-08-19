@@ -1,230 +1,233 @@
 <template>
-  <div>
-    <v-row v-if="latest" class="container-wrapper" align="center">
-      <v-col cols="12" lg="6" align="center">
-        <div class="wrapper">
-          <spinner :disabled="latest"></spinner>
-          <v-expansion-panels v-model="panelDolarBlue">
-            <v-expansion-panel>
-              <v-expansion-panel-header hide-actions class="pa-1" :class="{'pa-4': $vuetify.breakpoint.lgAndUp}">
-                <div class="d-flex align-center">
-                  <v-row no-gutters>
-                    <v-col cols="12" lg="4" align="center">
-                      <h2 class="header-text" :class="{'mb-2': $vuetify.breakpoint.mdAndDown}">Dólar Blue</h2>
-                    </v-col>
-                    <v-col  cols="12" lg="8" align="center">
-                      <div class="d-flex flex-column align-center">
-                        <div class="d-flex justify-space-between w-100">
-                          <h2 class="mr-1 blue-text">Venta: </h2>
-                          <h2 class="mr-4 blue-text">$ {{ latest.blue.value_sell.toFixed(0) }}</h2>
-                          <h2 class="mr-1 green-text">Compra: </h2>
-                          <h2 class="green-text">$ {{ latest.blue.value_buy.toFixed(0) }}</h2>
+  <transition>
+    <div v-if="show" key="show">
+      <v-row v-if="latest" class="container-wrapper" align="center">
+        <v-col cols="12" lg="6" align="center">
+          <div class="wrapper">
+            <spinner></spinner>
+            <v-expansion-panels v-model="panelDolarBlue">
+              <v-expansion-panel>
+                <v-expansion-panel-header hide-actions class="pa-1" :class="{'pa-4': $vuetify.breakpoint.lgAndUp}">
+                  <div class="d-flex align-center">
+                    <v-row no-gutters>
+                      <v-col cols="12" lg="4" align="center">
+                        <h2 class="header-text" :class="{'mb-2': $vuetify.breakpoint.mdAndDown}">Dólar Blue</h2>
+                      </v-col>
+                      <v-col  cols="12" lg="8" align="center">
+                        <div class="d-flex flex-column align-center">
+                          <div class="d-flex justify-space-between w-100">
+                            <h2 class="mr-1 blue-text">Venta: </h2>
+                            <h2 class="mr-4 blue-text">$ {{ latest.blue.value_sell.toFixed(0) }}</h2>
+                            <h2 class="mr-1 green-text">Compra: </h2>
+                            <h2 class="green-text">$ {{ latest.blue.value_buy.toFixed(0) }}</h2>
+                          </div>
+                          <span class="mt-2 comment-text">Última actualización: {{ lastUpdate }}</span>
                         </div>
-                        <span class="mt-2 comment-text">Última actualización: {{ lastUpdate }}</span>
-                      </div>
+                      </v-col>
+                    </v-row>
+                  </div>
+                </v-expansion-panel-header>
+                <v-expansion-panel-content>
+                  <v-row class="my-2">
+                    <v-col cols="6" align="center">
+                      <v-text-field
+                        v-model="monedaExtranjeraValor"
+                        hide-details
+                        dense
+                        solo
+                        counter
+                        type="number"
+                        :prefix="monedaPrefix"
+                        @focus="monedaExtranjeraValor = null"
+                      >
+                      </v-text-field>
+                    </v-col>
+                    <v-col cols="6" align="center">
+                      <v-text-field
+                        v-model="pesoValor"
+                        hide-details
+                        readonly
+                        dense
+                        solo
+                        prefix="AR$"
+                      ></v-text-field>
                     </v-col>
                   </v-row>
-                </div>
-              </v-expansion-panel-header>
-              <v-expansion-panel-content>
-                <v-row class="my-2">
-                  <v-col cols="6" align="center">
-                    <v-text-field
-                      v-model="monedaExtranjeraValor"
-                      hide-details
-                      dense
-                      solo
-                      counter
-                      type="number"
-                      :prefix="monedaPrefix"
-                      @focus="monedaExtranjeraValor = null"
-                    >
-                    </v-text-field>
-                  </v-col>
-                  <v-col cols="6" align="center">
-                    <v-text-field
-                      v-model="pesoValor"
-                      hide-details
-                      readonly
-                      dense
-                      solo
-                      prefix="AR$"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-                <div id="blue-chart">
-                  <AreaChart :series="dolarBlueSeries" />
-                </div>
-              </v-expansion-panel-content>
-            </v-expansion-panel>
-          </v-expansion-panels>
-        </div>
-      </v-col>
-      <v-col cols="12" lg="6" align="center">
-        <div class="wrapper">
-          <spinner :disabled="!$fetchState.pending"></spinner>
-          <v-expansion-panels v-model="panelDolarOficial">
-            <v-expansion-panel>
-              <v-expansion-panel-header hide-actions class="pa-1" :class="{'pa-4': $vuetify.breakpoint.lgAndUp}">
-                <div class="d-flex align-center">
-                  <v-row no-gutters>
-                    <v-col cols="12" lg="4" align="center">
-                      <h2 class="header-text" :class="{'mb-2': $vuetify.breakpoint.mdAndDown}">Dólar Oficial</h2>
-                    </v-col>
-                    <v-col cols="12" lg="8" align="center">
-                      <div class="d-flex flex-column align-center">
-                        <div class="d-flex justify-space-between w-100">
-                          <h2 class="mr-1 blue-text">Venta: </h2>
-                          <h2 class="mr-4 blue-text">$ {{ latest.oficial.value_sell.toFixed(0) }}</h2>
-                          <h2 class="mr-1 green-text">Compra: </h2>
-                          <h2 class="green-text">$ {{ latest.oficial.value_buy.toFixed(0) }}</h2>
-                        </div>
-                        <span class="mt-2 comment-text">Última actualización: {{ lastUpdate }}</span>
-                      </div>
-                    </v-col>
-                  </v-row>
-                </div>
-              </v-expansion-panel-header>
-              <v-expansion-panel-content>
-                <div id="oficial-chart">
-                  <AreaChart :series="dolarOficialSeries"/>
-                </div>
-              </v-expansion-panel-content>
-            </v-expansion-panel>
-          </v-expansion-panels>
-        </div>
-      </v-col>
-    </v-row>
-    <!-- <v-row class="container-wrapper mt-5" align="center">
-      <v-col cols="12" align="center">
-        <div class="wrapper d-flex justify-center align-center w-100">
-          <div class="d-flex align-center">
-            <v-row no-gutters>
-              <v-col cols="12" align="center">
-                <v-select
-                  v-model="monedaPrefix"
-                  :items="['USD', '€']"
-                  :suffix="Moneda"
-                  solo
-                  dense
-                  hide-details
-                  item-color="primary"
-                  :menu-props="{ overflowY: true }"
-                ></v-select>
-                <p class="mb-0 mt-3">1 {{monedaPrefix}} = {{ latest ? latest.blue.value_sell : 'Sin Cotización'}}</p>
-                <p class="comment-text ma-0">Última actualización: {{ lastUpdate }}</p>
-              </v-col>
-              <v-col cols="6" align="center">
-                <v-text-field
-                  v-model="monedaExtranjeraValor"
-                  hide-details
-                  dense
-                  solo
-                  counter
-                  type="number"
-                  :prefix="monedaPrefix"
-                >
-                </v-text-field>
-              </v-col>
-              <v-col cols="6" align="center">
-                <v-text-field
-                  v-model="pesoValor"
-                  hide-details
-                  readonly
-                  dense
-                  solo
-                  prefix="AR$"
-                ></v-text-field>
-              </v-col>
-            </v-row>
+                  <div id="blue-chart">
+                    <AreaChart :series="dolarBlueSeries" />
+                  </div>
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+            </v-expansion-panels>
           </div>
-        </div>
-      </v-col>
-    </v-row> -->
-    <v-row v-if="cryptos" class="container-wrapper mt-5" align="center">
-      <v-col cols="12" align="center">
-        <div class="wrapper d-lg-flex justify-center align-center w-100">
-          <spinner :disabled="!$fetchState.pending"></spinner>
-          <v-simple-table dense :class="{'w-70 mr-10': $vuetify.breakpoint.lgAndUp}">
-            <template #default>
-              <thead>
-                <tr>
-                  <th v-if="$vuetify.breakpoint.lgAndUp"></th>
-                  <th class="text-left" :class="{'px-0': $vuetify.breakpoint.mdAndDown}">Name</th>
-                  <th v-for="cryptoHeader in cryptoHeaders" :key="cryptoHeader" class="text-right" :class="{'px-0': $vuetify.breakpoint.mdAndDown}">
-                    {{ cryptoHeader }}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="crypto in cryptos" :key="crypto.id">
-                  <td v-if="$vuetify.breakpoint.lgAndUp" class="text-center" :class="{'px-1': $vuetify.breakpoint.mdAndDown}">
-                    <img :src="crypto.image" :alt="crypto.id" width="20px" class="pt-1">
-                  </td>
-                  <td class="text-left" :class="{'px-0': $vuetify.breakpoint.mdAndDown}">{{ crypto.name }}</td>
-                  <td class="text-right" :class="{'px-0': $vuetify.breakpoint.mdAndDown}">USD {{ formatNumberMoneyRound(crypto.current_price) }}</td>
-                  <td class="text-right" :class="[{'px-0': $vuetify.breakpoint.mdAndDown}, , crypto.price_change_percentage_24h > 0 ? 'green-text' : 'red-text']">{{ formatNumberMoneyRound(crypto.price_change_percentage_24h) }} %</td>
-                  <td class="text-right" :class="{'px-0': $vuetify.breakpoint.mdAndDown}">USD {{ formatNumberMoneyRound(crypto.market_cap) }}</td>
-                </tr>
-              </tbody>
-            </template>
-          </v-simple-table>
-          <client-only v-if="$vuetify.breakpoint.lgAndUp">
-            <div id="chart">
-              <VueApexCharts type="pie" height="250" :options="pieChartOptions" :series="pieChartSeries" />
+        </v-col>
+        <v-col cols="12" lg="6" align="center">
+          <div class="wrapper">
+            <spinner></spinner>
+            <v-expansion-panels v-model="panelDolarOficial">
+              <v-expansion-panel>
+                <v-expansion-panel-header hide-actions class="pa-1" :class="{'pa-4': $vuetify.breakpoint.lgAndUp}">
+                  <div class="d-flex align-center">
+                    <v-row no-gutters>
+                      <v-col cols="12" lg="4" align="center">
+                        <h2 class="header-text" :class="{'mb-2': $vuetify.breakpoint.mdAndDown}">Dólar Oficial</h2>
+                      </v-col>
+                      <v-col cols="12" lg="8" align="center">
+                        <div class="d-flex flex-column align-center">
+                          <div class="d-flex justify-space-between w-100">
+                            <h2 class="mr-1 blue-text">Venta: </h2>
+                            <h2 class="mr-4 blue-text">$ {{ latest.oficial.value_sell.toFixed(0) }}</h2>
+                            <h2 class="mr-1 green-text">Compra: </h2>
+                            <h2 class="green-text">$ {{ latest.oficial.value_buy.toFixed(0) }}</h2>
+                          </div>
+                          <span class="mt-2 comment-text">Última actualización: {{ lastUpdate }}</span>
+                        </div>
+                      </v-col>
+                    </v-row>
+                  </div>
+                </v-expansion-panel-header>
+                <v-expansion-panel-content>
+                  <div id="oficial-chart">
+                    <AreaChart :series="dolarOficialSeries"/>
+                  </div>
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+            </v-expansion-panels>
+          </div>
+        </v-col>
+      </v-row>
+      <!-- <v-row class="container-wrapper mt-5" align="center">
+        <v-col cols="12" align="center">
+          <div class="wrapper d-flex justify-center align-center w-100">
+            <div class="d-flex align-center">
+              <v-row no-gutters>
+                <v-col cols="12" align="center">
+                  <v-select
+                    v-model="monedaPrefix"
+                    :items="['USD', '€']"
+                    :suffix="Moneda"
+                    solo
+                    dense
+                    hide-details
+                    item-color="primary"
+                    :menu-props="{ overflowY: true }"
+                  ></v-select>
+                  <p class="mb-0 mt-3">1 {{monedaPrefix}} = {{ latest ? latest.blue.value_sell : 'Sin Cotización'}}</p>
+                  <p class="comment-text ma-0">Última actualización: {{ lastUpdate }}</p>
+                </v-col>
+                <v-col cols="6" align="center">
+                  <v-text-field
+                    v-model="monedaExtranjeraValor"
+                    hide-details
+                    dense
+                    solo
+                    counter
+                    type="number"
+                    :prefix="monedaPrefix"
+                  >
+                  </v-text-field>
+                </v-col>
+                <v-col cols="6" align="center">
+                  <v-text-field
+                    v-model="pesoValor"
+                    hide-details
+                    readonly
+                    dense
+                    solo
+                    prefix="AR$"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
             </div>
-          </client-only>
-        </div>
-      </v-col>
-    </v-row>
-    <v-row v-if="latest" class="container-wrapper mt-5" align="center">
-      <v-col cols="12" align="center">
-        <div class="wrapper d-flex justify-center align-center w-100">
-          <spinner :disabled="!$fetchState.pending"></spinner>
-          <v-expansion-panels v-model="panelEstadisticas">
-            <v-expansion-panel>
-              <v-expansion-panel-header hide-actions class="pa-1" :class="{'pa-4': $vuetify.breakpoint.lgAndUp}">
-                <div class="d-flex align-center">
-                  <v-row no-gutters justify="center">
-                    <v-col cols="12" lg="4" align="center">
-                      <h2 class="header-text">Otras monedas</h2>
+          </div>
+        </v-col>
+      </v-row> -->
+      <v-row v-if="cryptos" class="container-wrapper mt-5" align="center">
+        <v-col cols="12" align="center">
+          <div class="wrapper d-lg-flex justify-center align-center w-100">
+            <spinner></spinner>
+            <v-simple-table dense :class="{'w-70 mr-10': $vuetify.breakpoint.lgAndUp}">
+              <template #default>
+                <thead>
+                  <tr>
+                    <th v-if="$vuetify.breakpoint.lgAndUp"></th>
+                    <th class="text-left" :class="{'px-0': $vuetify.breakpoint.mdAndDown}">Name</th>
+                    <th v-for="cryptoHeader in cryptoHeaders" :key="cryptoHeader" class="text-right" :class="{'px-0': $vuetify.breakpoint.mdAndDown}">
+                      {{ cryptoHeader }}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="crypto in cryptos" :key="crypto.id">
+                    <td v-if="$vuetify.breakpoint.lgAndUp" class="text-center" :class="{'px-1': $vuetify.breakpoint.mdAndDown}">
+                      <img :src="crypto.image" :alt="crypto.id" width="20px" class="pt-1">
+                    </td>
+                    <td class="text-left" :class="{'px-0': $vuetify.breakpoint.mdAndDown}">{{ crypto.name }}</td>
+                    <td class="text-right" :class="{'px-0': $vuetify.breakpoint.mdAndDown}">USD {{ formatNumberMoneyRound(crypto.current_price) }}</td>
+                    <td class="text-right" :class="[{'px-0': $vuetify.breakpoint.mdAndDown}, , crypto.price_change_percentage_24h > 0 ? 'green-text' : 'red-text']">{{ formatNumberMoneyRound(crypto.price_change_percentage_24h) }} %</td>
+                    <td class="text-right" :class="{'px-0': $vuetify.breakpoint.mdAndDown}">USD {{ formatNumberMoneyRound(crypto.market_cap) }}</td>
+                  </tr>
+                </tbody>
+              </template>
+            </v-simple-table>
+            <client-only v-if="$vuetify.breakpoint.lgAndUp">
+              <div id="chart">
+                <VueApexCharts type="pie" height="250" :options="pieChartOptions" :series="pieChartSeries" />
+              </div>
+            </client-only>
+          </div>
+        </v-col>
+      </v-row>
+      <v-row v-if="latest" class="container-wrapper mt-5" align="center">
+        <v-col cols="12" align="center">
+          <div class="wrapper d-flex justify-center align-center w-100">
+            <spinner></spinner>
+            <v-expansion-panels v-model="panelEstadisticas">
+              <v-expansion-panel>
+                <v-expansion-panel-header hide-actions class="pa-1" :class="{'pa-4': $vuetify.breakpoint.lgAndUp}">
+                  <div class="d-flex align-center">
+                    <v-row no-gutters justify="center">
+                      <v-col cols="12" lg="4" align="center">
+                        <h2 class="header-text">Otras monedas</h2>
+                      </v-col>
+                    </v-row>
+                  </div>
+                </v-expansion-panel-header>
+                <v-expansion-panel-content>
+                  <v-row no-gutters>
+                    <v-col cols="12" class="d-flex justify-center" align="center">
+                      <h2 class="mr-4 normal-text-bold">Euro Oficial:</h2>
+                      <p class="mr-4 blue-text">Venta: $ {{ latest.oficial_euro.value_sell.toFixed(0) }}</p>
+                      <p class="green-text">Compra: $ {{ latest.oficial_euro.value_buy.toFixed(0) }}</p>
                     </v-col>
+                    <v-col cols="12" class="d-flex justify-center" align="center">
+                      <h2 class="mr-4 normal-text-bold">Euro Blue:</h2>
+                      <p class="mr-4 blue-text">Venta: $ {{ latest.blue_euro.value_sell.toFixed(0) }}</p>
+                      <p class="green-text">Compra: $ {{ latest.blue_euro.value_buy.toFixed(0) }}</p>
+                    </v-col>
+                    <!-- <v-col v-if="real" cols="12" class="d-flex justify-center" align="center">
+                      <h2 class="mr-4 normal-text-bold">Real Oficial:</h2>
+                      <p class="mr-4 blue-text">Venta: $ {{ real.venta.toFixed(0) }}</p>
+                      <p class="green-text">Compra: $ {{ real.compra.toFixed(0) }}</p>
+                    </v-col>
+                    <v-col v-if="bcraReservas" cols="12" class="d-flex justify-center" align="center">
+                      <h2 class="mr-4 normal-text-bold">Reservas BCRA:</h2>
+                      <p class="mr-4 blue-text">USD {{ bcraReservas.valor.toFixed(0) }}</p>
+                    </v-col>
+                    <v-col v-if="riesgoPais" cols="12" class="d-flex justify-center" align="center">
+                      <h2 class="mr-4 normal-text-bold">Riesgo Pais:</h2>
+                      <p class="mr-4 blue-text">{{ riesgoPais.valor }}</p>
+                    </v-col> -->
                   </v-row>
-                </div>
-              </v-expansion-panel-header>
-              <v-expansion-panel-content>
-                <v-row no-gutters>
-                  <v-col cols="12" class="d-flex justify-center" align="center">
-                    <h2 class="mr-4 normal-text-bold">Euro Oficial:</h2>
-                    <p class="mr-4 blue-text">Venta: $ {{ latest.oficial_euro.value_sell.toFixed(0) }}</p>
-                    <p class="green-text">Compra: $ {{ latest.oficial_euro.value_buy.toFixed(0) }}</p>
-                  </v-col>
-                  <v-col cols="12" class="d-flex justify-center" align="center">
-                    <h2 class="mr-4 normal-text-bold">Euro Blue:</h2>
-                    <p class="mr-4 blue-text">Venta: $ {{ latest.blue_euro.value_sell.toFixed(0) }}</p>
-                    <p class="green-text">Compra: $ {{ latest.blue_euro.value_buy.toFixed(0) }}</p>
-                  </v-col>
-                  <!-- <v-col v-if="real" cols="12" class="d-flex justify-center" align="center">
-                    <h2 class="mr-4 normal-text-bold">Real Oficial:</h2>
-                    <p class="mr-4 blue-text">Venta: $ {{ real.venta.toFixed(0) }}</p>
-                    <p class="green-text">Compra: $ {{ real.compra.toFixed(0) }}</p>
-                  </v-col>
-                  <v-col v-if="bcraReservas" cols="12" class="d-flex justify-center" align="center">
-                    <h2 class="mr-4 normal-text-bold">Reservas BCRA:</h2>
-                    <p class="mr-4 blue-text">USD {{ bcraReservas.valor.toFixed(0) }}</p>
-                  </v-col>
-                  <v-col v-if="riesgoPais" cols="12" class="d-flex justify-center" align="center">
-                    <h2 class="mr-4 normal-text-bold">Riesgo Pais:</h2>
-                    <p class="mr-4 blue-text">{{ riesgoPais.valor }}</p>
-                  </v-col> -->
-                </v-row>
-              </v-expansion-panel-content>
-            </v-expansion-panel>
-          </v-expansion-panels>
-        </div>
-      </v-col>
-    </v-row>
-  </div>
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+            </v-expansion-panels>
+          </div>
+        </v-col>
+      </v-row>
+    </div>
+    <div v-else key="notShow"></div>
+  </transition>
 </template>
 
 <script>
@@ -259,6 +262,7 @@ export default {
       monedaPrefix: "USD",
       monedaExtranjeraValor: 0,
       pesoValor: 0,
+      show: false,
     };
   },
   async fetch() {
@@ -366,7 +370,15 @@ export default {
       });
     }
   },
+  mounted() {
+    this.setShow();
+  },
   methods: {
+    setShow() {
+      setTimeout(() => {
+        this.show = true;
+      }, 300);
+    },
     formatNumberToMoney(number) {
       const formatter = new Intl.NumberFormat('es-AR', {
         style: 'decimal',

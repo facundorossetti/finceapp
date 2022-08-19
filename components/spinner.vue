@@ -12,11 +12,20 @@
 
 <script>
 export default {
-  props: {
-    disabled: {
-      type: Boolean,
-      default: false
+  data() {
+    return {
+      disabled: false
     }
+  },
+  mounted() {
+    this.setShow();
+  },
+  methods: {
+    setShow() {
+      setTimeout(() => {
+        this.disabled = true;
+      }, 800);
+    },
   },
 }
 </script>
@@ -26,7 +35,7 @@ export default {
   z-index: 9999;
   position: absolute;
   background: transparent;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(12px);
   top: 0;
   left: 0;
   width: 100%;
