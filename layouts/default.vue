@@ -6,7 +6,7 @@
         <button class="mt-5 login-btn  normal-text" @click="openLoginDialog">Create Account</button>
       </div>
     </div>
-    <v-dialog v-model="loginAndSignupDialog" max-width="500px" overlay-opacity="0.5" content-class="login-dialog">
+    <v-dialog v-model="loginAndSignupDialog" max-width="500px" overlay-opacity="0.5" content-class="login-dialog" @click:outside="removeData">
       <v-card color="background">
         <v-card-title class="justify-center px-4 pt-6">
           <span class="text-h5">Login</span>
@@ -16,6 +16,7 @@
             <v-col cols="12" class="pb-4">
               <v-text-field
                 v-model="user.email"
+                type="email"
                 hide-details
                 dense
                 solo
@@ -112,6 +113,13 @@ export default {
     }
   },
   methods: {
+    removeData() {
+      this.user = {
+        email: null,
+        password: null
+      };
+      this.loading = false;
+    },
     openLoginDialog() {
       this.activeMenu = false;
       this.loginAndSignupDialog = true;
