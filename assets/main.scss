@@ -87,7 +87,11 @@ body {
   opacity: 0;
 }
 
-
+@media (min-width: 1904px) {
+  .container {
+    max-width: 1285px !important;
+  }
+}
 
 @media screen and (max-width: 768px) {
   .row {

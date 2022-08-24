@@ -1,67 +1,28 @@
 <template>
   <v-app>
-    <div class="mobile-menu pa-4" :class="{'_active': activeMenu}">
+    <v-main>
+    <div class="mobile-menu pa-4 pt-8" :class="{'_active': activeMenu}">
       <div v-if="activeMenu" class="d-flex flex-column">
-        <button class="login-btn normal-text" @click="openLoginDialog">Login</button>
-        <button class="mt-5 login-btn  normal-text" @click="openLoginDialog">Create Account</button>
+        <button @click="activeMenu = false">
+          <NuxtLink class="wrapper menu-btn-mobile py-3 mb-6" to="/">Home</NuxtLink>
+        </button>
+        <button @click="activeMenu = false">
+          <NuxtLink class="wrapper menu-btn-mobile py-3 mb-6" to="/about">Sobre Nosotros</NuxtLink>
+        </button>
+        <button @click="activeMenu = false">
+          <NuxtLink class="wrapper menu-btn-mobile py-3" to="/contact">Contacto</NuxtLink>
+        </button>
+        <v-row class="mt-16" align="center">
+          <v-col cols="12" align="center">
+            <p>Diseñado y Desarrollado por</p>
+            <p>Facundo Rossetti</p>
+            <a href="http://www.facundorossetti.com.ar" target="_blank">
+              <img src="~/static/logo_transparent_background.png" alt="logoFR" width="60px">
+            </a>
+          </v-col>
+        </v-row>
       </div>
     </div>
-    <v-dialog v-model="loginAndSignupDialog" max-width="500px" overlay-opacity="0.5" content-class="login-dialog" @click:outside="removeData">
-      <v-card color="background">
-        <v-card-title class="justify-center px-4 pt-6">
-          <span class="text-h5">Login</span>
-        </v-card-title>
-        <v-card-text class="px-4">
-          <v-row no-gutters>
-            <v-col cols="12" class="pb-4">
-              <v-text-field
-                v-model="user.email"
-                type="email"
-                hide-details
-                dense
-                solo
-                label="Email"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="user.password"
-                type="password"
-                hide-details
-                dense
-                solo
-                label="Password"
-              ></v-text-field>
-            </v-col>
-          </v-row>
-        </v-card-text>
-
-        <v-card-actions class="px-4 pb-6">
-          <v-spacer></v-spacer>
-          <button
-            class="login-btn mr-4"
-            @click="loginAndSignupDialog = false"
-          >
-            Cancelar
-          </button>
-          <button
-            class="login-btn"
-            :class="{'active': loading}"
-            @click="loading = true"
-          >
-            <v-progress-circular
-              v-if="loading"
-              indeterminate
-              small
-              :size="20"
-              color="bluetext"
-            ></v-progress-circular>
-            <span v-else>Login</span>
-          </button>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-    <v-main>
       <v-container>
         <v-app-bar
           flat
@@ -70,7 +31,26 @@
         >
           <h2 v-if="$vuetify.breakpoint.smAndUp" class="header-text-mono">FinceApp</h2>
           <v-spacer v-if="$vuetify.breakpoint.smAndUp"></v-spacer>
+          <div v-if="$vuetify.breakpoint.smAndUp" class="pa-0 d-flex">
+            <NuxtLink class="wrapper menu-btn py-1 mr-2" to="/">Home</NuxtLink>
+            <NuxtLink class="wrapper menu-btn py-1 mr-2" to="/about">Sobre Nosotros</NuxtLink>
+            <NuxtLink class="wrapper menu-btn py-1 mr-2" to="/contact">Contacto</NuxtLink>
+            <div class="wrapper py-1">
+              <v-btn
+                icon
+                :ripple="false"
+                depressed
+                small
+                @click="changeTheme"
+              >
+                <v-icon color="text" medium>
+                  {{ $vuetify.theme.dark ? 'mdi-weather-night' : 'mdi-white-balance-sunny' }}
+                </v-icon>
+              </v-btn>
+            </div>
+          </div>
           <v-btn
+            v-if="$vuetify.breakpoint.xsOnly"
             icon
             :ripple="false"
             class="ml-2"
@@ -82,7 +62,7 @@
               {{ $vuetify.theme.dark ? 'mdi-weather-night' : 'mdi-white-balance-sunny' }}
             </v-icon>
           </v-btn>
-          <v-spacer v-if="$vuetify.breakpoint.smAndDown"></v-spacer>
+          <v-spacer v-if="$vuetify.breakpoint.xsOnly"></v-spacer>
           <h2 v-if="$vuetify.breakpoint.xsOnly" class="header-text-mono">FinceApp</h2>
           <v-spacer v-if="$vuetify.breakpoint.xsOnly"></v-spacer>
           <button v-if="$vuetify.breakpoint.xsOnly" class="mobile-menu-btn" :class="{'_active': activeMenu}" @click="activeMenu = !activeMenu">
@@ -103,27 +83,10 @@ export default {
   name: 'DefaultLayout',
   data() {
     return {
-      loginAndSignupDialog: false,
-      loading: false,
-      user: {
-        email: null,
-        password: null
-      },
       activeMenu: false,
     }
   },
   methods: {
-    removeData() {
-      this.user = {
-        email: null,
-        password: null
-      };
-      this.loading = false;
-    },
-    openLoginDialog() {
-      this.activeMenu = false;
-      this.loginAndSignupDialog = true;
-    },
     changeTheme() {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
     },
@@ -180,14 +143,36 @@ export default {
     height: 100vh;
     width: 100vw;
   }
-}
-.login-dialog {
-  border-radius: 20px;
+  .menu-btn-mobile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--v-text-base) !important;
+    width: 100%;
+    &.nuxt-link-exact-active {
+      background: var(--v-background-base) !important;
+      box-shadow:  inset 3px 3px 6px var(--v-shadow1-base),
+                  inset -3px -3px 6px var(--v-shadow2-base) !important;
+    }
+  }
 }
 </style>
 
 <style lang="scss" scoped>
-::v-deep .v-input__slot {
+.menu-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  color: var(--v-text-base) !important;
+  &.nuxt-link-exact-active {
+    background: var(--v-background-base) !important;
+    box-shadow:  inset 3px 3px 6px var(--v-shadow1-base),
+                inset -3px -3px 6px var(--v-shadow2-base) !important;
+  }
+}
+
+:deep(.v-input__slot) {
   border-radius: 12px !important;
   background: var(--v-background-base) !important;
   box-shadow:  inset 3px 3px 6px var(--v-shadow1-base),

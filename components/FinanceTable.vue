@@ -268,7 +268,7 @@ export default {
 tr:hover {
   background: transparent !important;
 }
-::v-deep .v-input__slot {
+:deep(.v-input__slot) {
   border-radius: 12px !important;
   background: var(--v-background-base) !important;
   box-shadow:  inset 3px 3px 6px var(--v-shadow1-base),

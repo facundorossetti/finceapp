@@ -29,6 +29,18 @@
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
                   <v-row class="my-2">
+                    <v-col cols="12" align="center">
+                      <v-select
+                        v-model="dolarBlueTipoCambio"
+                        :items="['Compra', 'Venta']"
+                        suffix="Tipo de conversión"
+                        solo
+                        dense
+                        hide-details
+                        item-color="text"
+                        :menu-props="{ overflowY: true, 'content-class': 'v-select-menu' }"
+                      ></v-select>
+                    </v-col>
                     <v-col cols="6" align="center">
                       <v-text-field
                         v-model="monedaExtranjeraValor"
@@ -37,6 +49,7 @@
                         solo
                         counter
                         type="number"
+                        hide-spin-buttons
                         :prefix="monedaPrefix"
                         @focus="monedaExtranjeraValor = null"
                       >
@@ -96,52 +109,6 @@
           </div>
         </v-col>
       </v-row>
-      <!-- <v-row class="container-wrapper mt-5" align="center">
-        <v-col cols="12" align="center">
-          <div class="wrapper d-flex justify-center align-center w-100">
-            <div class="d-flex align-center">
-              <v-row no-gutters>
-                <v-col cols="12" align="center">
-                  <v-select
-                    v-model="monedaPrefix"
-                    :items="['USD', '€']"
-                    :suffix="Moneda"
-                    solo
-                    dense
-                    hide-details
-                    item-color="primary"
-                    :menu-props="{ overflowY: true }"
-                  ></v-select>
-                  <p class="mb-0 mt-3">1 {{monedaPrefix}} = {{ latest ? latest.blue.value_sell : 'Sin Cotización'}}</p>
-                  <p class="comment-text ma-0">Última actualización: {{ lastUpdate }}</p>
-                </v-col>
-                <v-col cols="6" align="center">
-                  <v-text-field
-                    v-model="monedaExtranjeraValor"
-                    hide-details
-                    dense
-                    solo
-                    counter
-                    type="number"
-                    :prefix="monedaPrefix"
-                  >
-                  </v-text-field>
-                </v-col>
-                <v-col cols="6" align="center">
-                  <v-text-field
-                    v-model="pesoValor"
-                    hide-details
-                    readonly
-                    dense
-                    solo
-                    prefix="AR$"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-            </div>
-          </div>
-        </v-col>
-      </v-row> -->
       <v-row v-if="cryptos" class="container-wrapper mt-5" align="center">
         <v-col cols="12" align="center">
           <div class="wrapper d-lg-flex justify-center align-center w-100">
@@ -259,6 +226,7 @@ export default {
       real: null,
       bcraReservas: null,
       riesgoPais: null,
+      dolarBlueTipoCambio: "Compra",
       monedaPrefix: "USD",
       monedaExtranjeraValor: 0,
       pesoValor: 0,
@@ -361,7 +329,12 @@ export default {
   },
   watch: {
     monedaExtranjeraValor(val) {
-      const number = val * this.latest.blue.value_sell;
+      let number = null;
+      if (this.dolarBlueTipoCambio === 'Compra') {
+        number = val * this.latest.blue.value_buy;
+      } else if (this.dolarBlueTipoCambio === 'Venta') {
+        number = val * this.latest.blue.value_sell;
+      }
       this.pesoValor = this.formatNumberToMoney(number);
     },
     cryptos(val) {
@@ -374,10 +347,6 @@ export default {
     this.setShow();
   },
   methods: {
-    async fetchSomething() {
-      const user = await this.$axios.$get('/users')
-      console.log(user);
-    },
     setShow() {
       setTimeout(() => {
         this.show = true;
@@ -404,6 +373,14 @@ export default {
 </script>
 
 <style lang="scss">
+.v-select-menu {
+  border-radius: 15px;
+  .v-select-list {
+    margin-top: 40px;
+    padding: 0;
+    background-color: var(--v-background-base) !important;
+  }
+}
 .v-expansion-panel {
   background-color: transparent !important;
   color: inherit !important;
@@ -423,7 +400,7 @@ th {
 </style>
 
 <style lang="scss" scoped>
-::v-deep .v-input__slot {
+:deep(.v-input__slot) {
   border-radius: 12px !important;
   background: var(--v-background-base) !important;
   box-shadow:  inset 3px 3px 6px var(--v-shadow1-base),
