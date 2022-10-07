@@ -72,10 +72,13 @@ export default {
     meta: {
       title: 'My PWA',
       author: 'Me',
+      mobileAppIOS: true,
+      appleStatusBarStyle: 'default',
+      nativeUI: true,
     },
     manifest: {
-      name: 'Nuxt.js PWAs are so easy',
-      short_name: 'Nuxt.js PWA',
+      name: 'FinceApp',
+      short_name: 'FinceApp',
       lang: 'en',
       display: 'standalone',
       icons: [
