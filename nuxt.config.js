@@ -23,6 +23,7 @@ export default {
   buildModules: [
     '@nuxtjs/eslint-module',
     '@nuxtjs/vuetify',
+    '@nuxtjs/pwa',
   ],
 
   modules: [
@@ -64,5 +65,48 @@ export default {
       },
     },
   },
+
   build: {},
+
+  pwa: {
+    meta: {
+      title: 'My PWA',
+      author: 'Me',
+    },
+    manifest: {
+      name: 'Nuxt.js PWAs are so easy',
+      short_name: 'Nuxt.js PWA',
+      lang: 'en',
+      display: 'standalone',
+      icons: [
+        {
+          src: "~@/static/android-chrome-192x192.png",
+          sizes: "192x192",
+          type: "image/png"
+        },
+        {
+          src: "~@/static/android-chrome-512x512.png",
+          sizes: "512x512",
+          type: "image/png"
+        },
+        {
+          src: "~@/static/icon.png",
+          sizes: "512x512",
+          type: "image/png"
+        },
+        {
+          src: "~@/static/android-chrome-maskable-192x192.png",
+          sizes: "192x192",
+          type: "image/png",
+          purpose: "maskable"
+        },
+        {
+          src: "~@/static/android-chrome-maskable-512x512.png",
+          sizes: "512x512",
+          type: "image/png",
+          purpose: "maskable"
+        }
+      ],
+    },
+  }
 }
