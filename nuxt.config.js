@@ -80,6 +80,9 @@ export default {
       name: 'FinceApp',
       short_name: 'FinceApp',
       lang: 'en',
+      theme_color: "#64748b",
+      start_url: ".",
+      background_color: "#000000",
       display: 'standalone',
       icons: [
         {
